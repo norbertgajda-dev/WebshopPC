@@ -1,0 +1,70 @@
+.order-table{   
+    border-collapse:collapse;
+}
+
+.order-table-header{
+    text-align:center;
+    background:none repeat scroll 0 0 #cccccc;
+    border-bottom:1px solid #BBBBBB;
+    padding:16px;
+}
+
+.order-table-odd-row{
+    text-align:center;
+    background:none repeat scroll 0 0 #F9F9F9;
+    border-top:1px solid #BBBBBB;
+}
+
+.order-table-even-row{
+    text-align:center;
+    background:none repeat scroll 0 0 #cccccc;
+    border-top:1px solid #BBBBBB;
+}
+
+.pane {
+    width: 100%;
+    display: inline-block;
+    overflow-y: scroll;
+    max-height: 1000px;
+    min-height: 170px;
+}
+
+.summary-table-header{
+    text-align:left;
+    font-size: 20px;
+    background:none repeat scroll 0 0 #cccccc;
+    border-bottom:2px solid #BBBBBB;
+    padding:16px;
+}
+
+.summary-table-footer{
+    text-align:left;
+    font-size: 20px;
+    background:none repeat scroll 0 0 #cccccc;
+    border-bottom:2px solid #BBBBBB;
+    padding:10px;
+}
+
+.summary-table-row{
+    text-align:left;
+    font-size: 16px;
+    padding: 20px;
+    background:none repeat scroll 0 0 #ececec;
+}
+
+.summary-panelgrid{
+    text-align:left;
+    font-size: 16px;
+    padding: 1px;
+    margin-left: 10px;
+    background:none repeat scroll 0 0 #ececec;
+}
+
+.order-list-table-row{
+    text-align:left;
+    font-size: 16px;
+    margin-left: 10px;
+    border: 2px solid #000000;
+    padding: 20px;
+    background:none repeat scroll 0 0 #ececec;
+}

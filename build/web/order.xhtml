@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <h:outputStylesheet name="./css/table-style.css"/>
+        <title>Place Order</title>
+    </h:head>
+    <h:body>
+        <f:view locale="en_US">
+            <h:form>
+
+                <h:dataTable 
+                    styleClass="order-table"
+                    headerClass="summary-table-header"
+                    rowClasses="summary-table-row"
+                    width="100%"
+                    >
+                    <f:facet name="header">Summary: </f:facet>
+                </h:dataTable>
+                <h:panelGrid class="summary-table-row"  columns="2" width="100%">
+                    <h:outputText value="Name:"/><h:outputText value="#{shopMgBean.logInCustomer.name}"/>
+                    <h:outputText value="Email:"/><h:outputText value="#{shopMgBean.logInCustomer.email}"/>
+                    <h:outputText value="City:"/><h:outputText value="#{shopMgBean.logInCustomer.city}"/>
+                    <h:outputText value="Address:"/><h:outputText value="#{shopMgBean.logInCustomer.address}"/>
+                    <h:outputText value="Phone:"/><h:outputText value="#{shopMgBean.logInCustomer.phone}"/>
+                </h:panelGrid>
+
+                <h:dataTable value="#{cartMgBean.orderedItems}" var="item"
+                             styleClass="order-table"
+                             headerClass="summary-table-header"
+                             footerClass="summary-table-footer"
+                             rowClasses="summary-table-row"
+                             width="100%"
+                             >
+                    <h:column>
+                        <f:facet name="header">Your order(s):</f:facet>
+                        <h:panelGrid class="summary-panelgrid"  columns="2" width="100%">
+                            #{item.orderQty}X #{item.products.productName}, #{item.products.manufacturer}, #{item.products.description}, $#{item.products.price}
+                        </h:panelGrid>
+                        <f:facet name="footer" >
+                            <h:outputText value="#{cartMgBean.itemsPricesInCart}" style="font-size: 20px">
+                                <f:convertNumber type="currency" currencySymbol="$" pattern="$#,###"/>
+                            </h:outputText>    
+                            <h:commandButton value="Place order" styleClass="buttonBlue" style="margin-left: 10px" action="#{cartMgBean.saveOrder()}"/>
+                            <h:commandButton value="Cancel" styleClass="buttonBlue" style="margin-left: 10px" action="cart" immediate="true"/>
+                        </f:facet>
+                    </h:column>
+                </h:dataTable>
+
+            </h:form>
+        </f:view>
+
+    </h:body>
+</html>
+

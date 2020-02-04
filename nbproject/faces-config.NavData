@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="index.xhtml" x="502" y="37" zoom="true"/>
+        <Node id="register.xhtml" x="141" y="554" zoom="true"/>
+        <Node id="cart.xhtml" x="863" y="557" zoom="true"/>
+        <Node id="regSuccess.xhtml" x="483" y="550" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

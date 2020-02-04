@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <h:outputStylesheet name="./css/table-style.css"/>
+        <title>Webshop</title>
+    </h:head>
+
+    <h:body>
+        <div id="top">
+            <ui:insert name="top"></ui:insert>
+            <h:form rendered="#{shopMgBean.logInCustomer == null}">
+                <h:dataTable width="350">
+                    <f:facet name="header">
+                        <h:outputText value="Sign in or "/><h:link value="Register" outcome="register"/>
+                    </f:facet>>
+                </h:dataTable>
+                <h:dataTable width="350">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="email: " style="float:left" /><br/>
+                            <h:outputText value="password: " style="float:left"/>
+                        </f:facet>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:inputText value="#{shopMgBean.email}" size="20" style="float:left" id="emalPass"/> <br/>
+                            <h:inputSecret value="#{shopMgBean.pass}" size="20" style="float:left"/>
+
+                        </f:facet>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:commandButton style="float:left" value="Login" class="buttonGrey" action="#{shopMgBean.authuser()}"/>
+                        </f:facet>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+
+            <h:form rendered="#{shopMgBean.logInCustomer != null}">
+                <h:panelGrid columns="2" cellpadding="10" cellspacing="2" style="width: 100%">
+                    <h:panelGroup>
+                        <h:outputText value="Welcome #{shopMgBean.logInCustomer.name}!" styleClass="title"/>
+                        <h:commandButton value="Logout" class="buttonGrey" action="#{shopMgBean.logOut()}" style="margin-left: 10px"/>
+                        <h:commandButton value="Order history" class="buttonGrey" action="allOrder" style="margin-left: 10px"/>
+                    </h:panelGroup>
+                    <h:panelGroup style="float: right">
+                        <h:outputText value="#{cartMgBean.itemsInCart} item(s) in your Cart. "/>
+                        <h:commandButton value="Cart" class="buttonGrey" action="cart"/>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </h:form>
+
+        </div>
+        <div>
+            <div id="left">
+                <f:view>
+                    <h:form>
+                        <h:selectManyListbox id="filters" value="#{shopMgBean.filterOptions}" required="true" styleClass="filter_options">
+                            <f:selectItem itemLabel="All Products" itemValue="null"/>
+                            <f:selectItems value="#{shopMgBean.productLines}"/>
+                        </h:selectManyListbox>
+                        <h:commandButton value="Filter" action="#{shopMgBean.filterProducts()}" styleClass="buttonBlue" style="width: 100%"/>
+                    </h:form>
+                    <h:message for="filters" style="color:red;"> </h:message>
+                </f:view>
+            </div>
+
+            <div id="content" class="left_content">
+                <ui:insert name="content"></ui:insert>
+
+                <f:view>
+                    <h:form>
+                        <div class="pane">
+                            <h:dataTable value="#{shopMgBean.products}" var="product"
+                                         styleClass="order-table"
+                                         headerClass="order-table-header"
+                                         rowClasses="order-table-odd-row,order-table-even-row"
+                                         width="100%"
+                                         >
+                                <h:column>
+                                    <f:facet name="header">Name</f:facet>
+                                        #{product.productName}
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">Manufacturer</f:facet>
+                                        #{product.manufacturer}
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">Description</f:facet>
+                                        #{product.description}
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">Warranty</f:facet>
+                                        #{product.warranty}
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">Price</f:facet>
+                                    <h:outputText value="$#{product.price}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <h:commandButton value="add to Cart" class="buttonBlue" action="#{cartMgBean.addToCart(product)}"/>
+                                </h:column>
+                            </h:dataTable>
+                        </div>
+
+                    </h:form>
+                </f:view>
+
+            </div>
+        </div>
+        <div id="bottom">
+            <ui:insert name="bottom">NemBiztosHogyLeszelIttenTeValami</ui:insert>
+        </div>
+
+    </h:body>
+</html>

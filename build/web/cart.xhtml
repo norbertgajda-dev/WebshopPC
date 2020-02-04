@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <h:outputStylesheet name="./css/table-style.css"/>
+        <title>Cart</title>
+    </h:head>
+
+    <h:body>
+        <div id="top">
+            <ui:insert name="top"></ui:insert>
+            <h:form rendered="#{shopMgBean.logInCustomer == null}">
+                <h:dataTable width="350">
+                    <f:facet name="header">
+                        <h:outputText value="Sign in or "/><h:link value="Register" outcome="register"/>
+                    </f:facet>>
+                </h:dataTable>
+                <h:dataTable width="350">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="email: " style="float:left" /><br/>
+                            <h:outputText value="password: " style="float:left"/>
+                        </f:facet>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:inputText value="#{shopMgBean.email}" size="20" style="float:left" id="emalPass"/> <br/>
+                            <h:inputSecret value="#{shopMgBean.pass}" size="20" style="float:left"/>
+                        </f:facet>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:commandButton style="float:left" value="Login" class="buttonGrey" action="#{shopMgBean.authuser()}"/>
+                        </f:facet>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+
+            <h:form rendered="#{shopMgBean.logInCustomer != null}">
+                <h:panelGrid columns="2" cellpadding="10" cellspacing="2" style="width: 100%">
+                    <h:panelGroup>
+                        <h:outputText value="Welcome #{shopMgBean.logInCustomer.name}! " styleClass="title"/>
+                        <h:commandButton value="Logout" class="buttonGrey" action="#{shopMgBean.logOut()}"/>
+                    </h:panelGroup>
+                    <h:panelGroup style="float: right">
+                        <h:outputText value="#{cartMgBean.itemsInCart} item(s) in your Cart. "/>
+                        <h:commandButton value="Back" class="buttonGrey" action="index"/>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </h:form>
+        </div>
+
+        <div id="content" class="">
+            <ui:insert name="content"></ui:insert>
+            <f:view>
+                <h:form>
+                    <div class="pane">
+                        <h:dataTable styleClass="order-table"
+                                     headerClass="order-table-header"
+                                     rowClasses="order-table-odd-row,order-table-even-row"
+                                     width="100%"
+                                     rendered="#{cartMgBean.orderedItems.size() == 0}">
+                            <f:facet name="header">
+                                <h:outputText value="Your Cart is empty! Please"/>
+                                <h:commandLink value="go back" action="index"/>
+                                <h:outputText value=" to the main page!"/>
+                            </f:facet>
+                        </h:dataTable>
+
+                        <h:dataTable value="#{cartMgBean.orderedItems}" var="product"
+                                     styleClass="order-table"
+                                     headerClass="order-table-header"
+                                     rowClasses="order-table-odd-row,order-table-even-row"
+                                     width="100%"
+                                     rendered="#{cartMgBean.orderedItems.size() > 0}"
+                                     >
+                            <h:column>
+                                <f:facet name="header"></f:facet>
+                                <h:commandButton value="-" styleClass="buttonBlue" action="#{cartMgBean.decreaseQty(product)}"/>
+                                <h:commandButton value="#{product.orderQty}" disabled="true" styleClass="buttonWhite"/>
+                                <h:commandButton value="+" styleClass="buttonBlue" action="#{cartMgBean.increaseQty(product)}"/>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">Name</f:facet>
+                                    #{product.products.productName}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">Manufacturer</f:facet>
+                                    #{product.products.manufacturer}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">Description</f:facet>
+                                    #{product.products.description}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">Warranty</f:facet>
+                                    #{product.products.warranty}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">Price</f:facet>
+                                <h:outputText value="$#{product.products.price}"/>
+                                <f:facet name="footer">
+                                    <h:outputText value="Pay: $#{cartMgBean.itemsPricesInCart}"/>
+                                </f:facet>
+                            </h:column>
+                            <h:column>
+                                <h:commandButton value="Remove from the Cart" class="buttonBlue" action="#{cartMgBean.deleteFromCart(product)}"/>
+                                <f:facet name="footer">
+                                    <h:commandButton value="Place order" styleClass="buttonBlue" action="order"/>
+                                </f:facet>
+                            </h:column>
+                        </h:dataTable>
+                    </div>
+                </h:form>
+            </f:view>
+        </div>
+    </h:body>
+</html>
