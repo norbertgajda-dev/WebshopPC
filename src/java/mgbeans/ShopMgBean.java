@@ -63,7 +63,6 @@ public class ShopMgBean {
     }
 
     public void authuser() {
-        
         Map<String, Customers> customersMap = mapCustomers();
         if (customersMap.get(email) != null && customersMap.get(email).getPass().equals(pass)) {
             logInCustomer = customersMap.get(email);
@@ -76,8 +75,9 @@ public class ShopMgBean {
     }
 
     public void logOut() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         logInCustomer = null;
-    }
+   }
 
     public String register() {
         Map<String, Customers> customersMap = mapCustomers();

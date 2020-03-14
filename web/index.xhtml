@@ -49,7 +49,7 @@
                     <h:panelGroup>
                         <h:outputText value="Welcome #{shopMgBean.logInCustomer.name}!" styleClass="title"/>
                         <h:commandButton value="Logout" class="buttonGrey" action="#{shopMgBean.logOut()}" style="margin-left: 10px"/>
-                        <h:commandButton value="Order history" class="buttonGrey" action="allOrder" style="margin-left: 10px"/>
+                        <h:commandButton value="Order history" class="buttonGrey" action="#{orderHistoryMgBean.allOrders()}" style="margin-left: 10px"/>
                     </h:panelGroup>
                     <h:panelGroup style="float: right">
                         <h:outputText value="#{cartMgBean.itemsInCart} item(s) in your Cart. "/>
@@ -115,15 +115,9 @@
                                 </h:column>
                             </h:dataTable>
                         </div>
-
                     </h:form>
                 </f:view>
-
             </div>
         </div>
-        <div id="bottom">
-            <ui:insert name="bottom">NemBiztosHogyLeszelIttenTeValami</ui:insert>
-        </div>
-
     </h:body>
 </html>

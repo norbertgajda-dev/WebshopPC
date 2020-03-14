@@ -70,7 +70,7 @@ public class Orders  implements java.io.Serializable {
         this.orderNumberId = orderNumberId;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="customer_id", nullable=false)
     public Customers getCustomers() {
         return this.customers;

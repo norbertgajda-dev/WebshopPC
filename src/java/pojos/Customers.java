@@ -125,7 +125,7 @@ public class Customers  implements java.io.Serializable {
         this.address = address;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="customers")
+@OneToMany(fetch=FetchType.EAGER, mappedBy="customers")
     public Set<Orders> getOrderses() {
         return this.orderses;
     }

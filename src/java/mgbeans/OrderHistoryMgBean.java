@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -27,18 +28,25 @@ public class OrderHistoryMgBean {
     private Map<Orders, List<Products>> mapProducts;
     private List<Products> items;
 
+    
     public OrderHistoryMgBean() {
-        customer = (Customers) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedIn");
-
-        Session session = hibernate.HibernateUtil.getSessionFactory().openSession();
-        orders = session.createQuery("FROM Orders WHERE customer_id=customers").list();
-        session.close();
-
-        getProductsFromOrders();
-   
+        customer = (Customers) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedIn");  
+        allOrders();
     }
-
-    //még nem frissül a history, meg kell oldani gombra, és linkre is!
+    
+    public String allOrders () {
+        Session session = hibernate.HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("FROM Orders WHERE customers.customerId = :customerId");
+        query.setParameter("customerId", customer.getCustomerId());
+        orders = query.list();
+        session.close();
+        
+        getProductsFromOrders();
+        
+        return "allOrder";
+    }
+    
+    
     public void getProductsFromOrders() {
         items = new ArrayList<>();
         mapProducts = new HashMap<>();
@@ -49,7 +57,6 @@ public class OrderHistoryMgBean {
             mapProducts.put(order, new ArrayList<>(items));
             items.clear();
         }
-
     }
 
     public Map<Orders, List<Products>> getMapProducts() {

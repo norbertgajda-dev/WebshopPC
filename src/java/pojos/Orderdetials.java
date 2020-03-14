@@ -58,7 +58,7 @@ public class Orderdetials  implements java.io.Serializable {
         this.id = id;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="orderNumber_id", nullable=false)
     public Orders getOrders() {
         return this.orders;
